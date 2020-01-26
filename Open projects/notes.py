@@ -1,15 +1,10 @@
-player_to_words = {"cody": [], "mic": [], "connor": [], "emma": []}
+class Dog():
+    dog_time_dilation = 7
 
-def play_word(player, word):
-    word_list = player_to_words[player]
-    word_list.append(word)
-    print("The word \"" + word + "\" has been played by " + player + ".")
-    return player_to_words
+    def time_explanation(self):
+        print("Dogs experience {} years for every 1 human year.".format(self.dog_time_dilation))
 
-play_word("cody", "strange")
 
-print(player_to_words)
-
-play_word("cody", "obvious")
-
-print(player_to_words)
+pipi_pitbull = Dog()
+pipi_pitbull.time_explanation()
+# Prints "Dogs experience 7 years for every 1 human year."
