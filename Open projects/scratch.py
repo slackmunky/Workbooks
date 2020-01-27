@@ -1,18 +1,12 @@
-class Rules():
-    def washing_brushes(self):
-        return "Point bristles towards the basin while washing your brushes."
+class NoCustomAttributes:
+  pass
 
+attributeless = NoCustomAttributes()
 
-class Circle():
-    pi = 3.14
+try:
+  attributeless.fake_attribute
+except AttributeError:
+  print("This text gets printed!")
 
-    def area(self, radius):
-        return self.pi * radius ** 2
-
-
-circle = Circle()
-
-pizza_area = circle.area(.5 * 12)
-print(pizza_area)
-
-
+attributeless.fake_attribute = "Not attributeless anymore."
+print(attributeless.fake_attribute)
