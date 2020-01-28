@@ -3,7 +3,10 @@ letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
 points = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10, 0]
 letter_to_points = {letter: point for letter, point in zip(letters, points)}
 
-# This is a test comment for committing
+# Add option to choose number of players
+# Add triple/double score functionality
+# Make rounds unlimited, add option to manually end game
+#
 
 player_to_words = {}
 player_to_points = {}
