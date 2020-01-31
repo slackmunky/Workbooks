@@ -1,0 +1,27 @@
+
+# THIS IS ALL WRONG AND DOESN'T WORK. YET.
+def collatz(orig_number):
+    number = int(orig_number)
+    while number != 1:
+        iterating_number = number
+        if iterating_number % 2 == 0:
+            even_number = iterating_number // 2
+            number = even_number
+            print(number)
+            return number
+        elif iterating_number % 2 == 1:
+            odd_number = iterating_number * 3 + 1
+            number = odd_number
+            print(number)
+            return number
+        elif iterating_number == 1:
+            print("Collatz complete!")
+            break
+    if number == 1:
+        print("You're not supposed to start with 1, dummy!")
+    else:
+        return
+
+
+print("Enter an integer other than 1.")
+collatz(input())

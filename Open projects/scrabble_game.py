@@ -1,13 +1,15 @@
+# Add option to choose number of players
+# Add triple/double score functionality
+# Add ability to score multiple words in one play
+# Make max rounds == tile quantity/number of players
+# Add ability to manually end game
+
+
 letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
            "W", "X", "Y", "Z", ""]
 points = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10, 0]
+
 letter_to_points = {letter: point for letter, point in zip(letters, points)}
-
-# Add option to choose number of players
-# Add triple/double score functionality
-# Make rounds unlimited, add option to manually end game
-#
-
 player_to_words = {}
 player_to_points = {}
 play_list = []
@@ -27,7 +29,9 @@ def score_word(word):
 def game_start(start):
     magic_word = start.lower()
     if magic_word == "start":
-        for i in range(4):
+        print("Enter the number of players.")
+        player_count = int(input())
+        for i in range(player_count):
             print("Player " + str(i + 1) + ", please enter your name. No dirty words, you foul thing.")
             name = input()
             print("Thanks, " + name + "!")
