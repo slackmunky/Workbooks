@@ -1,9 +1,8 @@
-# Add option to choose number of players
 # Add triple/double score functionality
 # Add ability to score multiple words in one play
 # Make max rounds == tile quantity/number of players
 # Add ability to manually end game
-
+import sys
 
 letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
            "W", "X", "Y", "Z", ""]
@@ -27,10 +26,14 @@ def score_word(word):
 
 
 def game_start(start):
-    magic_word = start.lower()
+    magic_word = start
     if magic_word == "start":
         print("Enter the number of players.")
-        player_count = int(input())
+        try:
+            player_count = int(input())
+        except ValueError:
+            print("You need to enter a number, not a word.")
+            game_start("start")
         for i in range(player_count):
             print("Player " + str(i + 1) + ", please enter your name. No dirty words, you foul thing.")
             name = input()
@@ -58,6 +61,16 @@ def point_calculator(plays):
 
 
 def play_word(player, word):
+    played_word = word
+    if played_word == "I want to get off this ride.":
+        print("Are you sure?")
+        sure = input()
+        if sure == "yes":
+            plays = player_to_words
+            point_calculator(plays)
+            sys.exit()
+    else:
+        pass
     word_list = player_to_words[player]
     word_list.append(word)
     print("The word \"" + word + "\" has been played by " + player + ".")
@@ -65,13 +78,14 @@ def play_word(player, word):
     return player_to_words
 
 
+
 def wordplay(round):
-    game_length = range(round, 4)
+    game_length = range(100 // len(play_list))
     for round in game_length:
         print("Round " + str(round) + ": FIGHT! \nWith your words, please. We're not savages.")
         for name in play_list:
             player = name
-            print(player + " please enter a word.")
+            print(player + " please enter a word.\nType \"I want to get off this ride.\" to finish the game.")
             word = input()
             play_word(player, word)
         plays = player_to_words
@@ -80,5 +94,5 @@ def wordplay(round):
     return
 
 
-print("Type \"start\" to begin.")
-game_start(input())
+print("IT BEGINS!!!!!!!")
+game_start("start")
