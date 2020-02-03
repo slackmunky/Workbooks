@@ -16,7 +16,7 @@ class CircleArea():
         print("Area is: " + str(self.pi * radius ** 2))  # "self.pi" calls the class object into the method
 
 
-circle = CircleArea()  # Gives object a class
+circle = CircleArea()  # Gives variable object a class
 
 teaching_table_area = circle.area(
     36 / 2)  # circle.area calls the "area" method of the "Circle()" class with radius argument
@@ -45,7 +45,7 @@ shouter = Shout("I'm not listening!")
 
 # ".store_name" (or whatever descriptor you want) adds instanced attributes to objects to be called on later
 class Store:
-    pass  # Does nothing, I guess
+    pass  # Does nothing, useful for when a statement is needed syntactically
 
 
 # Gives objects a class
@@ -98,6 +98,8 @@ class SearchEngineEntry:
 
 codecademy = SearchEngineEntry("www.codecademy.com")  # Defines url instance attribute
 wikipedia = SearchEngineEntry("www.wikipedia.org")
+print(codecademy.url)
+print(wikipedia.url)
 print(codecademy.secure())  # Adds secure prefix to url instance attribute and prints
 print(wikipedia.secure())
 
@@ -121,4 +123,74 @@ teaching_table = Circle(36)
 print("Circumference is {c}".format(c=teaching_table.circumference()))
 round_room = Circle(11460)
 print("Circumference is {c}".format(c=round_room.circumference()))
+
+
+# Creating a subclass
+class Bin:
+    pass
+
+
+class TrashBin(Bin):  # Lists "Bin" as the superclass for the TrashBin subclass
+    pass
+
+
+# Defines OutOfStock as a subclass of native Exception class
+class OutOfStock(Exception):
+    pass
+
+
+# Set up for testing OutOfStock Exception
+class CandleShop:
+    name = "Here's a Hot Tip: Buy Drip Candles"  # Not particularly important, funny, or clever
+
+    def __init__(self, stock):  # Adds ability to add stock
+        self.stock = stock
+
+    def buy(self, color):  # Adds ability to deplete stock
+        if self.stock[color] < 1:  # This is what raises the error
+            raise OutOfStock
+        self.stock[color] = self.stock[color] - 1  # subtracts from stock
+
+
+candle_shop = CandleShop({'blue': 6, 'red': 2, 'green': 0})  # initial stock
+candle_shop.buy('blue')  # This does not raise an exception
+
+# candle_shop.buy('green')  # This raises the OutOfStock exception because there are no green candles
+
+# Setup for overriding method using classes
+class Message:  # Initial setup
+    def __init__(self, sender, recipient, text):
+        self.sender = sender
+        self.recipient = recipient
+        self.text = text
+
+
+class User:  # Defines user traits
+    def __init__(self, username):
+        self.username = username
+
+    def edit_message(self, message, new_text):
+        if message.sender == self.username:  # checks if the user attempting to edit is the one who wrote it
+            message.text = new_text
+
+
+class Admin(User):
+    def edit_message(self, message, new_text):  # Bypasses the user check if the user is an Admin
+        message.text = new_text
+
+
+
+# Inheriting from parent class using super() as temp object
+class PotatoSalad:
+    def __init__(self, potatoes, celery, onions):
+        self.potatoes = potatoes
+        self.celery = celery
+        self.onions = onions
+
+
+class SpecialPotatoSalad(PotatoSalad):
+    def __init__(self, potatoes, celery, onions):
+        super().__init__(potatoes, celery, onions)  # Inherits traits from superclass
+        self.raisins = 40  # Adds raisins
+
 
