@@ -1,3 +1,9 @@
+# Austin Chronicle elements to find music listings at https://www.austinchronicle.com/events/music/YYYY-MM-DD/
+# body > div#total-containment > div#content-area.clear-fix > div#cal-left > section#listings
+# Relevant data start on line 3371 and ends on 4518
+# Need to figure out how to compare current foreign data to current local data and only pull changes
+
+
 # Basic class and method
 class Rules():
     def washing_brushes(self):
@@ -7,10 +13,10 @@ class Rules():
 chore = Rules()  # Gives "chore" a rules class
 chore.washing_brushes()  # Calls the method attached to the class
 
-
 # Class and method with argument
 class CircleArea():
     pi = 3.14  # Define a class object
+
 
     def area(self, radius):
         print("Area is: " + str(self.pi * radius ** 2))  # "self.pi" calls the class object into the method
@@ -18,8 +24,8 @@ class CircleArea():
 
 circle = CircleArea()  # Gives variable object a class
 
-teaching_table_area = circle.area(
-    36 / 2)  # circle.area calls the "area" method of the "Circle()" class with radius argument
+# circle.area calls the "area" method of the "Circle()" class with radius argument
+teaching_table_area = circle.area(36 / 2)
 
 
 # Class with constructor(__init__)
@@ -155,6 +161,7 @@ class CandleShop:
 candle_shop = CandleShop({'blue': 6, 'red': 2, 'green': 0})  # initial stock
 candle_shop.buy('blue')  # This does not raise an exception
 
+
 # candle_shop.buy('green')  # This raises the OutOfStock exception because there are no green candles
 
 # Setup for overriding method using classes
@@ -179,7 +186,6 @@ class Admin(User):
         message.text = new_text
 
 
-
 # Inheriting from parent class using super() as temp object
 class PotatoSalad:
     def __init__(self, potatoes, celery, onions):
@@ -192,5 +198,3 @@ class SpecialPotatoSalad(PotatoSalad):
     def __init__(self, potatoes, celery, onions):
         super().__init__(potatoes, celery, onions)  # Inherits traits from superclass
         self.raisins = 40  # Adds raisins
-
-
