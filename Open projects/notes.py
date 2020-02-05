@@ -1,7 +1,13 @@
-# Austin Chronicle elements to find music listings at https://www.austinchronicle.com/events/music/YYYY-MM-DD/
-# body > div#total-containment > div#content-area.clear-fix > div#cal-left > section#listings
+# Austin Chronicle elements to find music listings at
+# https://www.austinchronicle.com/events/music/YYYY-MM-DD/
+# body >
+#       div#total-containment >
+#       div#content-area.clear-fix >
+#       div#cal-left >
+#       section#listings
 # Relevant data start on line 3371 and ends on 4518
-# Need to figure out how to compare current foreign data to current local data and only pull changes
+# Need to figure out how to compare current foreign data to
+# current local data and only pull changes
 
 
 # Basic class and method
@@ -10,21 +16,26 @@ class Rules():
         print("Point bristles towards the basin while washing your brushes.")
 
 
-chore = Rules()  # Gives "chore" a rules class
-chore.washing_brushes()  # Calls the method attached to the class
+# Gives "chore" a rules class
+chore = Rules()
+# Calls the method attached to the class
+chore.washing_brushes()
+
 
 # Class and method with argument
 class CircleArea():
-    pi = 3.14  # Define a class object
-
+    # Define a class object
+    pi = 3.14
 
     def area(self, radius):
-        print("Area is: " + str(self.pi * radius ** 2))  # "self.pi" calls the class object into the method
+        # "self.pi" calls the class object into the method
+        print("Area is: " + str(self.pi * radius ** 2))
 
 
-circle = CircleArea()  # Gives variable object a class
+# Gives variable object a class
+circle = CircleArea()
 
-# circle.area calls the "area" method of the "Circle()" class with radius argument
+# circle.area calls "area" method of "Circle()" with radius argument
 teaching_table_area = circle.area(36 / 2)
 
 
@@ -32,8 +43,11 @@ teaching_table_area = circle.area(36 / 2)
 class CircleInfo:
     pi = 3.14
 
-    def __init__(self, diameter):  # "__init__" performs method whenever class is called
-        print("New circle with diameter: {diameter}".format(diameter=diameter))
+    # "__init__" performs method whenever class is called
+    def __init__(self, diameter):
+        print("New circle with diameter: {diameter}".format(
+                diameter=diameter
+        ))
 
 
 teaching_table = CircleInfo(36)  # performs class constructor method
@@ -49,20 +63,25 @@ class Shout:
 shouter = Shout("I'm not listening!")
 
 
-# ".store_name" (or whatever descriptor you want) adds instanced attributes to objects to be called on later
+# ".store_name" (or whatever descriptor you want) adds instanced
+# attributes to objects to be called on later
 class Store:
-    pass  # Does nothing, useful for when a statement is needed syntactically
+    # Does nothing, used when a statement is needed syntactically
+    pass
 
 
 # Gives objects a class
 alternative_rocks = Store()
 isabelles_ices = Store()
 
-# Assigns instanced attributes with whatever name you choose. Could be "alternative_rocks.asldkhg"
+# Assigns instanced attributes with whatever name you choose.
+# Could be "alternative_rocks.asldkhg"
 alternative_rocks.store_name = "Alternative Rocks"
 isabelles_ices.store_name = "Isabelle's Ices"
 
-store_string = "{} {}".format(alternative_rocks.store_name, isabelles_ices.store_name)
+store_string = "{} {}".format(
+        alternative_rocks.store_name,
+        isabelles_ices.store_name)
 print(store_string)
 
 
@@ -75,12 +94,15 @@ attributeless = NoCustomAttributes()
 try:
     attributeless.fake_attribute
 except AttributeError:
-    print("This text gets printed!")  # This is printed as the instanced attribute is not yet assigned
+    # This is printed as the instanced attribute is not yet assigned
+    print("This text gets printed!")
 
 attributeless.fake_attribute = "Not attributeless anymore."
-print(attributeless.fake_attribute)  # Prints "Not attributeless anymore." because that's true now
+# Prints "Not attributeless anymore." because that's true now
+print(attributeless.fake_attribute)
 
-# Checking if an object has an attribute and returning a value using the attribute checked for
+# Checking if an object has an attribute and
+# returning a value using the attribute checked for
 how_many_s = [{'s': False}, "sassafrass", 18, ["a", "c", "s", "d", "s"]]
 
 for entry in how_many_s:
@@ -93,20 +115,25 @@ for entry in how_many_s:
 class SearchEngineEntry:
     secure_prefix = "https://"
 
-    # Adds argument of SearchEngineEntry("argument") as definition of url attribute for object
+    # Adds argument of SearchEngineEntry("argument") as
+    # definition of url attribute for object
     def __init__(self, url):
         self.url = url
 
-    # object_name.secure() adds "https://" for secure connection to previously created url
+    # object_name.secure() adds "https://" for secure
+    # connection to previously created url
     def secure(self):
-        return "{prefix}{site}".format(prefix=self.secure_prefix, site=self.url)
+        return "{prefix}{site}".format(prefix=self.secure_prefix,
+                                       site=self.url)
 
 
-codecademy = SearchEngineEntry("www.codecademy.com")  # Defines url instance attribute
+# Defines url instance attribute
+codecademy = SearchEngineEntry("www.codecademy.com")
 wikipedia = SearchEngineEntry("www.wikipedia.org")
 print(codecademy.url)
 print(wikipedia.url)
-print(codecademy.secure())  # Adds secure prefix to url instance attribute and prints
+# Adds secure prefix to url instance attribute and prints
+print(codecademy.secure())
 print(wikipedia.secure())
 
 
@@ -136,7 +163,8 @@ class Bin:
     pass
 
 
-class TrashBin(Bin):  # Lists "Bin" as the superclass for the TrashBin subclass
+# Lists "Bin" as the superclass for the TrashBin subclass
+class TrashBin(Bin):
     pass
 
 
@@ -147,42 +175,53 @@ class OutOfStock(Exception):
 
 # Set up for testing OutOfStock Exception
 class CandleShop:
-    name = "Here's a Hot Tip: Buy Drip Candles"  # Not particularly important, funny, or clever
+    # Not particularly important, funny, or clever
+    name = "Here's a Hot Tip: Buy Drip Candles"
 
-    def __init__(self, stock):  # Adds ability to add stock
+    # Adds ability to add stock
+    def __init__(self, stock):
         self.stock = stock
 
-    def buy(self, color):  # Adds ability to deplete stock
-        if self.stock[color] < 1:  # This is what raises the error
+    # Adds ability to deplete stock
+    def buy(self, color):
+        # This is what raises the error
+        if self.stock[color] < 1:
             raise OutOfStock
-        self.stock[color] = self.stock[color] - 1  # subtracts from stock
+        # subtracts from stock
+        self.stock[color] = self.stock[color] - 1
 
 
-candle_shop = CandleShop({'blue': 6, 'red': 2, 'green': 0})  # initial stock
-candle_shop.buy('blue')  # This does not raise an exception
+# initial stock
+candle_shop = CandleShop({'blue': 6, 'red': 2, 'green': 0})
+# This does not raise an exception
+candle_shop.buy('blue')
 
 
-# candle_shop.buy('green')  # This raises the OutOfStock exception because there are no green candles
+# candle_shop.buy('green')
+# This ^ raises the OutOfStock exception because there are no green candles
 
 # Setup for overriding method using classes
-class Message:  # Initial setup
+class Message:
     def __init__(self, sender, recipient, text):
         self.sender = sender
         self.recipient = recipient
         self.text = text
 
 
-class User:  # Defines user traits
+# Defines user traits
+class User:
     def __init__(self, username):
         self.username = username
 
     def edit_message(self, message, new_text):
-        if message.sender == self.username:  # checks if the user attempting to edit is the one who wrote it
+        # checks if the user attempting to edit is the one who wrote it
+        if message.sender == self.username:
             message.text = new_text
 
 
 class Admin(User):
-    def edit_message(self, message, new_text):  # Bypasses the user check if the user is an Admin
+    # Bypasses the user check if the user is an Admin
+    def edit_message(self, message, new_text):
         message.text = new_text
 
 
@@ -196,5 +235,7 @@ class PotatoSalad:
 
 class SpecialPotatoSalad(PotatoSalad):
     def __init__(self, potatoes, celery, onions):
-        super().__init__(potatoes, celery, onions)  # Inherits traits from superclass
-        self.raisins = 40  # Adds raisins
+        # Inherits traits from superclass
+        super().__init__(potatoes, celery, onions)
+        # Adds raisins, because gross
+        self.raisins = 40

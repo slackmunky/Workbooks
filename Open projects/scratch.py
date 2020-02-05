@@ -1,29 +1,67 @@
-class Student:
+class Node:
+    def __init__(self, value, next_node=None):
+        self.value = value
+        self.next_node = next_node
 
-    def __init__(self, name, year):
-        self.name = name
-        self.year = year
-        self.grades = []
+    def get_value(self):
+        return self.value
 
-    def add_grade(self, grade):
-        if type(grade) == Grade:
-            self.grades.append(grade)
-        else:
-            pass
+    def get_next_node(self):
+        return self.next_node
 
-
-roger = Student("Roger van der Weyden", 10)
-sandro = Student("Sandro Botticelli", 12)
-pieter = Student("Pieter Bruegel the Elder", 8)
+    # Sets new next_node
+    def set_next_node(self, next_node):
+        self.next_node = next_node
 
 
-class Grade:
-    minimum_passing = 65
+# Sets my_node's value and does not link to another node
+my_node = Node(2564)
+print(my_node.value)
 
-    def __init__(self, score):
-        self.score = score
+# Sets your_node's value and links to my_node
+your_node = Node(42, my_node)
+# Prints my_node's value
+print(your_node.next_node.value)
 
 
+class LinkedList:
+    def __init__(self, value=None):
+        self.value = value
+        # Sets head_node as value, even when no value is passed in????
+        # Does that mean head_node == None by default????? that seems odd
+        self.head_node = Node(value)
 
-pieter_grade = Grade(100)
-pieter.add_grade(pieter_grade)
+    def get_head_node(self):
+        return self.head_node
+
+    def insert_beginning(self, new_value):
+        new_node = Node(new_value)
+        new_node.set_next_node(self.head_node)
+        self.head_node = new_node
+
+    # My garbage attempt before I realized I had no fucking clue
+    # def stringify_list(self):
+        # string_list = ""
+        # string_list += str(self.get_head_node().value())
+
+    # Their solution
+    def stringify_list(self):
+        string_list = ""
+        # Oh, you can just define "here" and say "while you're here"
+        # Fuck me, I guess
+        current_node = self.get_head_node()
+        while current_node:
+            if current_node.get_value() != None:
+                string_list += str(current_node.get_value()) + "\n"
+            current_node = current_node.get_next_node()
+        return string_list
+
+# Yeah, of course it all prints fine.
+# And they provide no notes as to why stringify_list works, they just assume
+# you remember every single word and concept, no matter how briefly
+# discussed or practiced.
+ll = LinkedList(5)
+ll.insert_beginning(70)
+ll.insert_beginning(5675)
+ll.insert_beginning(90)
+print(ll.stringify_list())
