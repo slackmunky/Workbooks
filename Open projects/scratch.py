@@ -1,4 +1,4 @@
-# This is just a test of the work -> GitHub -> home and reverse connection
+# Now testing personal to work
 
 class Node:
     def __init__(self, value, next_node=None):
