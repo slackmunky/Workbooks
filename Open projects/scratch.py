@@ -35,14 +35,10 @@ class LinkedList:
         return self.head_node
 
     def insert_beginning(self, new_value):
+        # Defines new_node as Node class
         new_node = Node(new_value)
         new_node.set_next_node(self.head_node)
         self.head_node = new_node
-
-    # My garbage attempt before I realized I had no fucking clue
-    # def stringify_list(self):
-        # string_list = ""
-        # string_list += str(self.get_head_node().value())
 
     # Their solution
     def stringify_list(self):
@@ -50,7 +46,9 @@ class LinkedList:
         # Oh, you can just define "here" and say "while you're here"
         # Fuck me, I guess
         current_node = self.get_head_node()
+        # while current_node: evaluates to True, so this runs.
         while current_node:
+            # Checks to make sure a value exists
             if current_node.get_value() != None:
                 string_list += str(current_node.get_value()) + "\n"
             current_node = current_node.get_next_node()
