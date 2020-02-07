@@ -1,8 +1,8 @@
-# Now testing personal to work
-
 class Node:
+    # Sets initial Node value and defaults downstream node value to None.
     def __init__(self, value, next_node=None):
         self.value = value
+        # Used to identify downstream node.
         self.next_node = next_node
 
     def get_value(self):
@@ -11,57 +11,60 @@ class Node:
     def get_next_node(self):
         return self.next_node
 
-    # Sets new next_node
+    # Replaces next_node with new node.
     def set_next_node(self, next_node):
         self.next_node = next_node
 
 
-# Sets my_node's value and does not link to another node
-my_node = Node(2564)
-print(my_node.value)
-
-# Sets your_node's value and links to my_node
-your_node = Node(42, my_node)
-# Prints my_node's value
-print(your_node.next_node.value)
-
-
+# Our LinkedList class
 class LinkedList:
     def __init__(self, value=None):
         self.value = value
-        # Sets head_node as value, even when no value is passed in????
-        # Does that mean head_node == None by default????? that seems odd
+        # Creates a Node(value) and defines itself as the head node.
+        # I wonder if this can be used to define a node in the middle
+        # of a series since head_node is only defined here...
         self.head_node = Node(value)
 
     def get_head_node(self):
         return self.head_node
 
     def insert_beginning(self, new_value):
-        # Defines new_node as Node class
+        # Defines new_node as a new Node(value).
         new_node = Node(new_value)
+        # Sets current instance of head_node as the next node in the series.
         new_node.set_next_node(self.head_node)
+        # Then installs itself as the new head node.
         self.head_node = new_node
 
-    # Their solution
+    # Their solution.
     def stringify_list(self):
+        # Sets an empty string to fill.
         string_list = ""
-        # Oh, you can just define "here" and say "while you're here"
-        # Fuck me, I guess
+        # Go to first node in series and evaluate that one first.
         current_node = self.get_head_node()
-        # while current_node: evaluates to True, so this runs.
+        # "while current_node:" evaluates to True, so this runs.
         while current_node:
-            # Checks to make sure a value exists
-            if current_node.get_value() != None:
+            # Checks to make sure a value exists.
+            if current_node.get_value() is not None:
+                # Adds the value of the current node to the list with return.
                 string_list += str(current_node.get_value()) + "\n"
+            # Moves to the next node in the series.
+            # If no next node exists, "while current_node:" == False
+            # and the loop stops evaluating.
             current_node = current_node.get_next_node()
         return string_list
 
-# Yeah, of course it all prints fine.
-# And they provide no notes as to why stringify_list works, they just assume
-# you remember every single word and concept, no matter how briefly
-# discussed or practiced.
-ll = LinkedList(5)
-ll.insert_beginning(70)
-ll.insert_beginning(5675)
-ll.insert_beginning(90)
-print(ll.stringify_list())
+    # Define your remove_node method below:
+    def remove_node(self, value_to_remove):
+        # Starts evaluation at head node.
+        current_node = self.head_node
+        # If the current node is the one to remove, then...
+        if current_node.get_value == value_to_remove:
+            # Set current node as next node.
+            # Won't this just end up evaluating the same node?
+            #
+            # I want to set the current node (the head node in the if
+            # statement) as the next node, so I have to use .set_next_node(
+            # current_node) as a function, but what do I put as the prefix?
+            self.head_node = current_node.set_next_node()
+            # current_node.set_next_node(current_node)

@@ -10,10 +10,14 @@
 # current local data and only pull changes
 
 
+# Classes 17-ish through 245-ish
+# Nodes 245-ish through 324-ish
+
 # Basic class and method
-class Rules():
+class Rules:
+    # noinspection PyMethodMayBeStatic
     def washing_brushes(self):
-        print("Point bristles towards the basin while washing your brushes.")
+        return "Point bristles towards the basin while washing your brushes."
 
 
 # Gives "chore" a rules class
@@ -23,13 +27,15 @@ chore.washing_brushes()
 
 
 # Class and method with argument
-class CircleArea():
+class CircleArea:
     # Define a class object
     pi = 3.14
 
     def area(self, radius):
+        area = self.pi * radius ** 2
         # "self.pi" calls the class object into the method
-        print("Area is: " + str(self.pi * radius ** 2))
+        print("Area is: " + str(area))
+        return area
 
 
 # Gives variable object a class
@@ -50,7 +56,8 @@ class CircleInfo:
         ))
 
 
-teaching_table = CircleInfo(36)  # performs class constructor method
+# performs class constructor method
+teaching_table = CircleInfo(36)
 
 
 # Another class with constructor
@@ -106,7 +113,7 @@ print(attributeless.fake_attribute)
 how_many_s = [{'s': False}, "sassafrass", 18, ["a", "c", "s", "d", "s"]]
 
 for entry in how_many_s:
-    if hasattr(entry, "count") != True:
+    if hasattr(entry, "count") is not True:
         continue
     else:
         print(entry.count("s"))
@@ -239,3 +246,84 @@ class SpecialPotatoSalad(PotatoSalad):
         super().__init__(potatoes, celery, onions)
         # Adds raisins, because gross
         self.raisins = 40
+
+
+##############################################################################
+
+class Node:
+    # Sets initial Node value and defaults downstream node value to None.
+    def __init__(self, value, next_node=None):
+        self.value = value
+        # Used to identify downstream node.
+        self.next_node = next_node
+
+    def get_value(self):
+        return self.value
+
+    def get_next_node(self):
+        return self.next_node
+
+    # Replaces next_node with new node.
+    def set_next_node(self, next_node):
+        self.next_node = next_node
+
+
+# Sets my_node's value and does not link to another node.
+my_node = Node(2564)
+# print(my_node.value)
+
+# Sets your_node's value and becomes head node.
+your_node = Node(42, my_node)
+
+
+# Prints my_node's value.
+print(your_node.next_node.value)
+
+
+class LinkedList:
+    def __init__(self, value=None):
+        self.value = value
+        # Creates a Node(value) and defines itself as the head node.
+        # I wonder if this can be used to define a node in the middle
+        # of a series since head_node is only defined here...
+        self.head_node = Node(value)
+
+    def get_head_node(self):
+        return self.head_node
+
+    def insert_beginning(self, new_value):
+        # Defines new_node as a new Node(value).
+        new_node = Node(new_value)
+        # Sets current instance of head_node as the next node in the series.
+        new_node.set_next_node(self.head_node)
+        # Then installs itself as the new head node.
+        self.head_node = new_node
+
+    # Their solution.
+    def stringify_list(self):
+        # Sets an empty string to fill.
+        string_list = ""
+        # Go to first node in series and evaluate that one first.
+        current_node = self.get_head_node()
+        # "while current_node:" evaluates to True, so this runs.
+        while current_node:
+            # Checks to make sure a value exists.
+            if current_node.get_value() is not None:
+                # Adds the value of the current node to the list with return.
+                string_list += str(current_node.get_value()) + "\n"
+            # Moves to the next node in the series.
+            # If no next node exists, "while current_node:" == False
+            # and the loop stops evaluating.
+            current_node = current_node.get_next_node()
+        return string_list
+
+
+# Yeah, of course it all prints fine.
+# And they provide no notes as to why stringify_list works, they just assume
+# you remember every single word and concept, no matter how briefly
+# discussed or practiced.
+linked_list = LinkedList(5)
+linked_list.insert_beginning(70)
+linked_list.insert_beginning(5675)
+linked_list.insert_beginning(90)
+print(linked_list.stringify_list())
