@@ -59,12 +59,24 @@ class LinkedList:
         # Starts evaluation at head node.
         current_node = self.head_node
         # If the current node is the one to remove, then...
-        if current_node.get_value == value_to_remove:
-            # Set current node as next node.
-            # Won't this just end up evaluating the same node?
-            #
-            # I want to set the current node (the head node in the if
-            # statement) as the next node, so I have to use .set_next_node(
-            # current_node) as a function, but what do I put as the prefix?
-            self.head_node = current_node.set_next_node()
-            # current_node.set_next_node(current_node)
+        if current_node.get_value() == value_to_remove:
+            print("if is working")
+            # So if the head node is the one with the value we want to
+            # remove, we just move on??? This doesn't make any sense and
+            # solves nothing, and I hate it.
+            self.head_node = current_node.get_next_node()
+        else:
+            while current_node:
+                next_node = current_node.get_next_node()
+                if next_node.get_value() == value_to_remove:
+                    current_node.set_next_node(next_node.get_next_node())
+                    current_node = None
+                else:
+                    current_node = next_node
+
+
+linked_list = LinkedList(5)
+linked_list.insert_beginning(70)
+linked_list.insert_beginning(5675)
+linked_list.insert_beginning(90)
+linked_list.remove_node(90)
