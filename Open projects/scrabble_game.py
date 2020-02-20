@@ -6,7 +6,8 @@ import sys
 
 letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
            "W", "X", "Y", "Z", ""]
-points = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10, 0]
+points = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
+          4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10, 0]
 
 letter_to_points = {letter: point for letter, point in zip(letters, points)}
 player_to_words = {}
@@ -35,7 +36,8 @@ def game_start(start):
             print("You need to enter a number, not a word.")
             game_start("start")
         for i in range(player_count):
-            print("Player " + str(i + 1) + ", please enter your name. No dirty words, you foul thing.")
+            print("Player " + str(i + 1) +
+                  ", please enter your name. No dirty words, you foul thing.")
             name = input()
             print("Thanks, " + name + "!")
             print()
@@ -78,14 +80,15 @@ def play_word(player, word):
     return player_to_words
 
 
-
 def wordplay(round):
     game_length = range(100 // len(play_list))
     for round in game_length:
-        print("Round " + str(round) + ": FIGHT! \nWith your words, please. We're not savages.")
+        print("Round " + str(round) +
+              ": FIGHT! \nWith your words, please. We're not savages.")
         for name in play_list:
             player = name
-            print(player + " please enter a word.\nType \"I want to get off this ride.\" to finish the game.")
+            print(
+                player + " please enter a word.\nType \"I want to get off this ride.\" to finish the game.")
             word = input()
             play_word(player, word)
         plays = player_to_words
