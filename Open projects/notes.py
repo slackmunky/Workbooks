@@ -14,7 +14,6 @@
 # Nodes 245-ish through 324-ish
 
 # Basic class and method
-from node import Node
 
 
 class Rules:
@@ -55,7 +54,7 @@ class CircleInfo:
     # "__init__" performs method whenever class is called
     def __init__(self, diameter):
         print("New circle with diameter: {diameter}".format(
-            diameter=diameter
+                diameter=diameter
         ))
 
 
@@ -90,8 +89,8 @@ alternative_rocks.store_name = "Alternative Rocks"
 isabelles_ices.store_name = "Isabelle's Ices"
 
 store_string = "{} {}".format(
-    alternative_rocks.store_name,
-    isabelles_ices.store_name)
+        alternative_rocks.store_name,
+        isabelles_ices.store_name)
 print(store_string)
 
 
@@ -276,7 +275,6 @@ my_node = Node(2564)
 # Sets your_node's value and becomes head node.
 your_node = Node(42, my_node)
 
-
 # Prints my_node's value.
 print(your_node.next_node.value)
 
@@ -317,6 +315,26 @@ class LinkedList:
             # and the loop stops evaluating.
             current_node = current_node.get_next_node()
         return string_list
+
+    # Define your remove_node method below:
+    def remove_node(self, value_to_remove):
+        # Starts evaluation at head node.
+        current_node = self.head_node
+        # If the current node is the one to remove, then...
+        if current_node.get_value() == value_to_remove:
+            print("if is working")
+            # So if the head node is the one with the value we want to
+            # remove, we just move on??? This doesn't make any sense and
+            # solves nothing, and I hate it.
+            self.head_node = current_node.get_next_node()
+        else:
+            while current_node:
+                next_node = current_node.get_next_node()
+                if next_node.get_value() == value_to_remove:
+                    current_node.set_next_node(next_node.get_next_node())
+                    current_node = None
+                else:
+                    current_node = next_node
 
 
 # Yeah, of course it all prints fine.
@@ -479,6 +497,8 @@ deli_line.dequeue()
 # ------------------------ #
 # Uncomment the line below:
 deli_line.dequeue()
+
+
 # ------------------------ #
 
 
@@ -509,7 +529,7 @@ class HashMap:
 
         number_collisions = 1
 
-        while(current_array_value[0] != key):
+        while (current_array_value[0] != key):
             new_hash_code = self.hash(key, number_collisions)
             new_array_index = self.compressor(new_hash_code)
             current_array_value = self.array[new_array_index]
@@ -561,3 +581,29 @@ hash_map.assign("gneiss", "metamorphic")
 print(hash_map.retrieve("gabbro"))
 print(hash_map.retrieve("sandstone"))
 print(hash_map.retrieve("gneiss"))
+
+
+class TreeNode:
+    def __init__(self, value):
+        self.value = value  # data
+        self.children = []  # references to other nodes
+
+    def add_child(self, child_node):
+        # creates parent-child relationship
+        print("Adding " + child_node.value)
+        self.children.append(child_node)
+
+    def remove_child(self, child_node):
+        # removes parent-child relationship
+        print("Removing " + child_node.value + " from " + self.value)
+        self.children = [child for child in self.children
+                         if child is not child_node]
+
+    def traverse(self):
+        # moves through each node referenced from self downwards
+        nodes_to_visit = [self]
+        while len(nodes_to_visit) > 0:
+            current_node = nodes_to_visit.pop()
+            print(current_node.value)
+            # Can also use "nodes_to_visit.extend(current_node.children)"
+            nodes_to_visit += current_node.children
