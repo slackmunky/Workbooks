@@ -607,3 +607,179 @@ class TreeNode:
             print(current_node.value)
             # Can also use "nodes_to_visit.extend(current_node.children)"
             nodes_to_visit += current_node.children
+
+
+class MinHeap:
+    def __init__(self):
+        self.heap_list = [None]
+        self.count = 0
+
+    # HEAP HELPER METHODS
+    # DO NOT CHANGE!
+    def parent_idx(self, idx):
+        return idx // 2
+
+    def left_child_idx(self, idx):
+        return idx * 2
+
+    def right_child_idx(self, idx):
+        return idx * 2 + 1
+
+    # NEW HELPER!
+    def child_present(self, idx):
+        return self.left_child_idx(idx) <= self.count
+
+    # END OF HEAP HELPER METHODS
+
+    def retrieve_min(self):
+        if self.count == 0:
+            print("No items in heap")
+            return None
+        # Saves the desired return value.
+        min = self.heap_list[1]
+        print("Removing: {0} from {1}".format(min, self.heap_list))
+        # Duplicates the last value over the desired value.
+        self.heap_list[1] = self.heap_list[self.count]
+        self.count -= 1
+        # Removes the duplicated value from the end of the list.
+        self.heap_list.pop()
+        print("Last element moved to first: {0}".format(self.heap_list))
+        # Resorts the values to maintain heap rules.
+        self.heapify_down()
+        return min
+
+    def add(self, element):
+        self.count += 1
+        print("Adding: {0} to {1}".format(element, self.heap_list))
+        self.heap_list.append(element)
+        self.heapify_up()
+
+    def heapify_down(self):
+        idx = 1
+        while self.child_present(idx):
+            print("Heapifying down!")
+            smaller_child_idx = self.get_smaller_child_idx(idx)
+            child = self.heap_list[smaller_child_idx]
+            parent = self.heap_list[idx]
+            if parent > child:
+                self.heap_list[idx] = child
+                self.heap_list[smaller_child_idx] = parent
+            idx = smaller_child_idx
+
+    print("Heap Restored! {0}".format(self.heap_list)
+
+    def get_smaller_child_idx(self, idx):
+        if self.right_child_idx(idx) > self.count:
+            print("There is only a left child")
+            return self.left_child_idx(idx)
+        else:
+            left_child = self.heap_list[self.left_child_idx(idx)]
+            right_child = self.heap_list[self.right_child_idx(idx)]
+            if left_child < right_child:
+                print("Left child is smaller")
+                return self.left_child_idx(idx)
+            else:
+                print("Right child is smaller")
+                return self.right_child_idx(idx)
+
+    def heapify_up(self):
+        idx = self.count
+        while self.parent_idx(idx) > 0:
+            if self.heap_list[self.parent_idx(idx)] > self.heap_list[idx]:
+                tmp = self.heap_list[self.parent_idx(idx)]
+                print("swapping {0} with {1}".format(tmp, self.heap_list[idx]))
+                self.heap_list[self.parent_idx(idx)] = self.heap_list[idx]
+                self.heap_list[idx] = tmp
+            idx = self.parent_idx(idx)
+        print("HEAP RESTORED! {0}".format(self.heap_list))
+        print("")
+
+
+# make an instance of MinHeap
+min_heap = MinHeap()
+
+# set internal list for testing purposes...
+min_heap.heap_list = [None, 10, 13, 21, 61, 22, 23, 99]
+min_heap.count = 7
+
+while len(min_heap.heap_list) != 1:
+    print(min_heap.heap_list)
+    min_heap.retrieve_min()
+
+
+class Vertex:
+    def __init__(self, value):
+        self.value = value
+        self.edges = {}
+
+    def add_edge(self, vertex, weight=0):
+        self.edges[vertex] = weight
+
+    def get_edges(self):
+        return list(self.edges.keys())
+
+
+class Graph:
+    def __init__(self, directed=False):
+        self.graph_dict = {}
+        self.directed = directed
+
+    def add_vertex(self, vertex):
+        self.graph_dict[vertex.value] = vertex
+
+    def add_edge(self, from_vertex, to_vertex, weight=0):
+        self.graph_dict[from_vertex.value].add_edge(to_vertex.value, weight)
+        if not self.directed:
+            self.graph_dict[to_vertex.value].add_edge(from_vertex.value,
+                                                      weight)
+
+    def find_path(self, start_vertex, end_vertex):
+        start = [start_vertex]
+        seen = {}
+        while len(start) > 0:
+            current_vertex = start.pop(0)
+            seen[current_vertex] = True
+            print("Visiting " + current_vertex)
+            if current_vertex == end_vertex:
+                return True
+            else:
+                vertices_to_visit = set(
+                    self.graph_dict[current_vertex].edges.keys())
+                start += [vertex for vertex in vertices_to_visit if
+                          vertex not in seen]
+        return False
+
+
+from random import randrange
+
+
+def print_graph(graph):
+    for vertex in graph.graph_dict:
+        print("")
+        print(vertex + " connected to")
+        vertex_neighbors = graph.graph_dict[vertex].edges
+        if len(vertex_neighbors) == 0:
+            print("No edges!")
+        for adjacent_vertex in vertex_neighbors:
+            print("=> " + adjacent_vertex)
+
+
+def build_graph(directed):
+    g = Graph(directed)
+    vertices = []
+    for value in ['a', 'b', 'c', 'd', 'e', 'f', 'g']:
+        vertex = Vertex(value)
+        vertices.append(vertex)
+        g.add_vertex(vertex)
+
+    for v in range(len(vertices)):
+        v_idx = randrange(0, len(vertices) - 1)
+        v1 = vertices[v_idx]
+        v_idx = randrange(0, len(vertices) - 1)
+        v2 = vertices[v_idx]
+        g.add_edge(v1, v2, randrange(1, 10))
+
+    print_graph(g)
+
+
+build_graph(False)
