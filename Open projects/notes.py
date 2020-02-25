@@ -666,7 +666,7 @@ class MinHeap:
                 self.heap_list[smaller_child_idx] = parent
             idx = smaller_child_idx
 
-    print("Heap Restored! {0}".format(self.heap_list)
+    print("Heap Restored! {0}".format(self.heap_list))
 
     def get_smaller_child_idx(self, idx):
         if self.right_child_idx(idx) > self.count:
@@ -744,7 +744,7 @@ class Graph:
                 return True
             else:
                 vertices_to_visit = set(
-                    self.graph_dict[current_vertex].edges.keys())
+                        self.graph_dict[current_vertex].edges.keys())
                 start += [vertex for vertex in vertices_to_visit if
                           vertex not in seen]
         return False
@@ -783,3 +783,70 @@ def build_graph(directed):
 
 
 build_graph(False)
+
+
+def cm_find_max(linked_list):
+    # print("--------------------------")
+    # print("Finding the maximum value of:\n{0}".format(
+    # linked_list.stringify_list()))
+    node_values = []
+    current_node = linked_list.get_head_node()
+    while current_node:
+        node_values.append(current_node.get_value())
+        current_node = current_node.get_next_node()
+    return max(node_values)
+
+
+def find_max(linked_list):
+    current = linked_list.get_head_node()
+    maximum = current.get_value()
+    while current.get_next_node():
+        current = current.get_next_node()
+        val = current.get_value()
+        if val > maximum:
+            maximum = val
+    return maximum
+
+
+def sort_linked_list(linked_list):
+    print("\n---------------------------")
+    print("The original linked list is:\n{0}".format(
+            linked_list.stringify_list()))
+    new_linked_list = LinkedList()
+    while linked_list.get_head_node():
+        max_val = find_max(linked_list)
+        new_linked_list.insert_beginning(max_val)
+        linked_list.remove_node(max_val)
+    new_linked_list.remove_node(None)
+    return new_linked_list
+
+
+# Test Cases
+ll = LinkedList("Z")
+ll.insert_beginning("C")
+ll.insert_beginning("Q")
+ll.insert_beginning("A")
+print("The sorted linked list is:\n{0}".format(
+        sort_linked_list(ll).stringify_list()))
+
+ll_2 = LinkedList(1)
+ll_2.insert_beginning(4)
+ll_2.insert_beginning(18)
+ll_2.insert_beginning(2)
+ll_2.insert_beginning(3)
+ll_2.insert_beginning(7)
+print("The sorted linked list is:\n{0}".format(
+        sort_linked_list(ll_2).stringify_list()))
+
+ll_3 = LinkedList(-11)
+ll_3.insert_beginning(44)
+ll_3.insert_beginning(118)
+ll_3.insert_beginning(1000)
+ll_3.insert_beginning(23)
+ll_3.insert_beginning(-92)
+print("The sorted linked list is:\n{0}".format(
+        sort_linked_list(ll_3).stringify_list()))
+
+# Runtime
+runtime = "REPLACE"
+print("The runtime of sort_linked_list is O({0})\n\n".format(runtime))
