@@ -850,3 +850,134 @@ print("The sorted linked list is:\n{0}".format(
 # Runtime
 runtime = "REPLACE"
 print("The runtime of sort_linked_list is O({0})\n\n".format(runtime))
+
+
+def sum_digits(n):
+    if n <= 9:
+        return n
+    last_digit = n % 10
+    return sum_digits(n // 10) + last_digit
+
+
+# test cases
+print(sum_digits(12) == 3)
+print(sum_digits(552) == 12)
+print(sum_digits(123456789) == 45)
+
+
+def find_min(num_list):
+    if len(num_list) == 0:
+        return None
+    num_list.sort()
+    if len(num_list) == 1:
+        return num_list[0]
+    return find_min(num_list[:-1])
+
+
+# test cases
+print(find_min([42, 17, 2, -1, 67]) == -1)
+print(find_min([]) == None)
+print(find_min([13, 72, 19, 5, 86]) == 5)
+
+
+def is_palindrome(str):
+    if len(str) < 2:
+        return True
+    if str[0] != str[-1]:
+        return False
+    return is_palindrome(str[1:-1])
+
+
+# test cases
+print(is_palindrome("abba") == True)
+print(is_palindrome("abcba") == True)
+print(is_palindrome("") == True)
+print(is_palindrome("abcd") == False)
+
+
+def multiplication(num1, num2):
+    if num1 == 0 or num2 == 0:
+        return 0
+    if num1 > 0 and num2 > 0:
+        product = num1 + multiplication(num1, num2 - 1)
+    return product
+
+
+# test cases
+print(multiplication(3, 7))
+print(multiplication(5, 5))
+print(multiplication(0, 4))
+
+
+def depth(tree):
+    if not tree:
+        return 0
+    left_depth = depth(tree["left_child"])
+    return left_depth + 1
+
+
+# HELPER FUNCTION TO BUILD TREES
+def build_bst(my_list):
+    if len(my_list) == 0:
+        return None
+
+    mid_idx = len(my_list) // 2
+    mid_val = my_list[mid_idx]
+
+    tree_node = {"data": mid_val}
+    tree_node["left_child"] = build_bst(my_list[: mid_idx])
+    tree_node["right_child"] = build_bst(my_list[mid_idx + 1:])
+
+    return tree_node
+
+
+# HELPER VARIABLES
+tree_level_1 = build_bst([1])
+tree_level_2 = build_bst([1, 2, 3])
+tree_level_4 = build_bst([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+tree_level_bunch = build_bst(list(range(1, 100, 1)))
+# test cases
+print(depth(tree_level_bunch))
+print(depth(tree_level_2))
+print(depth(tree_level_4))
+
+
+def merge_sort(items):
+    if len(items) <= 1:
+        return items
+    middle_index = len(items) // 2
+    left_split = items[:middle_index]
+    right_split = items[middle_index:]
+    left_sorted = merge_sort(left_split)
+    right_sorted = merge_sort(right_split)
+    return merge(left_sorted, right_sorted)
+
+
+def merge(left, right):
+    result = []
+    while left and right:
+        if left[0] < right[0]:
+            result.append(left[0])
+            left.pop(0)
+        else:
+            result.append(right[0])
+            right.pop(0)
+    if left:
+        result += left
+    if right:
+        result += right
+    return result
+
+
+unordered_list1 = [356, 746, 264, 569, 949, 895, 125, 455]
+unordered_list2 = [787, 677, 391, 318, 543, 717, 180, 113, 795, 19, 202, 534,
+                   201, 370, 276, 975, 403, 624, 770, 595, 571, 268, 373]
+unordered_list3 = [860, 380, 151, 585, 743, 542, 147, 820, 439, 865, 924, 387]
+
+ordered_list1 = merge_sort(unordered_list1)
+ordered_list2 = merge_sort(unordered_list2)
+ordered_list3 = merge_sort(unordered_list3)
+
+print(ordered_list1)
+print(ordered_list2)
+print(ordered_list3)
