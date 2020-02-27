@@ -16,6 +16,10 @@
 # Basic class and method
 
 
+from random import randrange, shuffle
+from random import randrange
+
+
 class Rules:
     # noinspection PyMethodMayBeStatic
     def washing_brushes(self):
@@ -54,7 +58,7 @@ class CircleInfo:
     # "__init__" performs method whenever class is called
     def __init__(self, diameter):
         print("New circle with diameter: {diameter}".format(
-                diameter=diameter
+            diameter=diameter
         ))
 
 
@@ -89,8 +93,8 @@ alternative_rocks.store_name = "Alternative Rocks"
 isabelles_ices.store_name = "Isabelle's Ices"
 
 store_string = "{} {}".format(
-        alternative_rocks.store_name,
-        isabelles_ices.store_name)
+    alternative_rocks.store_name,
+    isabelles_ices.store_name)
 print(store_string)
 
 
@@ -744,20 +748,17 @@ class Graph:
                 return True
             else:
                 vertices_to_visit = set(
-                        self.graph_dict[current_vertex].edges.keys())
+                    self.graph_dict[current_vertex].edges.keys())
                 start += [vertex for vertex in vertices_to_visit if
                           vertex not in seen]
         return False
-
-
-from random import randrange
 
 
 def print_graph(graph):
     for vertex in graph.graph_dict:
         print("")
         print(vertex + " connected to")
-        vertex_neighbors = graph.graph_dict[vertex].edges
+        vertex_neighbors=graph.graph_dict[vertex].edges
         if len(vertex_neighbors) == 0:
             print("No edges!")
         for adjacent_vertex in vertex_neighbors:
@@ -765,18 +766,18 @@ def print_graph(graph):
 
 
 def build_graph(directed):
-    g = Graph(directed)
-    vertices = []
+    g=Graph(directed)
+    vertices=[]
     for value in ['a', 'b', 'c', 'd', 'e', 'f', 'g']:
-        vertex = Vertex(value)
+        vertex=Vertex(value)
         vertices.append(vertex)
         g.add_vertex(vertex)
 
     for v in range(len(vertices)):
-        v_idx = randrange(0, len(vertices) - 1)
-        v1 = vertices[v_idx]
-        v_idx = randrange(0, len(vertices) - 1)
-        v2 = vertices[v_idx]
+        v_idx=randrange(0, len(vertices) - 1)
+        v1=vertices[v_idx]
+        v_idx=randrange(0, len(vertices) - 1)
+        v2=vertices[v_idx]
         g.add_edge(v1, v2, randrange(1, 10))
 
     print_graph(g)
@@ -789,32 +790,32 @@ def cm_find_max(linked_list):
     # print("--------------------------")
     # print("Finding the maximum value of:\n{0}".format(
     # linked_list.stringify_list()))
-    node_values = []
-    current_node = linked_list.get_head_node()
+    node_values=[]
+    current_node=linked_list.get_head_node()
     while current_node:
         node_values.append(current_node.get_value())
-        current_node = current_node.get_next_node()
+        current_node=current_node.get_next_node()
     return max(node_values)
 
 
 def find_max(linked_list):
-    current = linked_list.get_head_node()
-    maximum = current.get_value()
+    current=linked_list.get_head_node()
+    maximum=current.get_value()
     while current.get_next_node():
-        current = current.get_next_node()
-        val = current.get_value()
+        current=current.get_next_node()
+        val=current.get_value()
         if val > maximum:
-            maximum = val
+            maximum=val
     return maximum
 
 
 def sort_linked_list(linked_list):
     print("\n---------------------------")
     print("The original linked list is:\n{0}".format(
-            linked_list.stringify_list()))
-    new_linked_list = LinkedList()
+        linked_list.stringify_list()))
+    new_linked_list=LinkedList()
     while linked_list.get_head_node():
-        max_val = find_max(linked_list)
+        max_val=find_max(linked_list)
         new_linked_list.insert_beginning(max_val)
         linked_list.remove_node(max_val)
     new_linked_list.remove_node(None)
@@ -822,40 +823,40 @@ def sort_linked_list(linked_list):
 
 
 # Test Cases
-ll = LinkedList("Z")
+ll=LinkedList("Z")
 ll.insert_beginning("C")
 ll.insert_beginning("Q")
 ll.insert_beginning("A")
 print("The sorted linked list is:\n{0}".format(
-        sort_linked_list(ll).stringify_list()))
+    sort_linked_list(ll).stringify_list()))
 
-ll_2 = LinkedList(1)
+ll_2=LinkedList(1)
 ll_2.insert_beginning(4)
 ll_2.insert_beginning(18)
 ll_2.insert_beginning(2)
 ll_2.insert_beginning(3)
 ll_2.insert_beginning(7)
 print("The sorted linked list is:\n{0}".format(
-        sort_linked_list(ll_2).stringify_list()))
+    sort_linked_list(ll_2).stringify_list()))
 
-ll_3 = LinkedList(-11)
+ll_3=LinkedList(-11)
 ll_3.insert_beginning(44)
 ll_3.insert_beginning(118)
 ll_3.insert_beginning(1000)
 ll_3.insert_beginning(23)
 ll_3.insert_beginning(-92)
 print("The sorted linked list is:\n{0}".format(
-        sort_linked_list(ll_3).stringify_list()))
+    sort_linked_list(ll_3).stringify_list()))
 
 # Runtime
-runtime = "REPLACE"
+runtime="REPLACE"
 print("The runtime of sort_linked_list is O({0})\n\n".format(runtime))
 
 
 def sum_digits(n):
     if n <= 9:
         return n
-    last_digit = n % 10
+    last_digit=n % 10
     return sum_digits(n // 10) + last_digit
 
 
@@ -880,26 +881,26 @@ print(find_min([]) == None)
 print(find_min([13, 72, 19, 5, 86]) == 5)
 
 
-def is_palindrome(str):
+def palindrome(str):
     if len(str) < 2:
         return True
     if str[0] != str[-1]:
         return False
-    return is_palindrome(str[1:-1])
+    return palindrome(str[1:-1])
 
 
 # test cases
-print(is_palindrome("abba") == True)
-print(is_palindrome("abcba") == True)
-print(is_palindrome("") == True)
-print(is_palindrome("abcd") == False)
+print(palindrome("abba") == True)
+print(palindrome("abcba") == True)
+print(palindrome("") == True)
+print(palindrome("abcd") == False)
 
 
 def multiplication(num1, num2):
     if num1 == 0 or num2 == 0:
         return 0
     if num1 > 0 and num2 > 0:
-        product = num1 + multiplication(num1, num2 - 1)
+        product=num1 + multiplication(num1, num2 - 1)
     return product
 
 
@@ -912,7 +913,7 @@ print(multiplication(0, 4))
 def depth(tree):
     if not tree:
         return 0
-    left_depth = depth(tree["left_child"])
+    left_depth=depth(tree["left_child"])
     return left_depth + 1
 
 
@@ -921,21 +922,21 @@ def build_bst(my_list):
     if len(my_list) == 0:
         return None
 
-    mid_idx = len(my_list) // 2
-    mid_val = my_list[mid_idx]
+    mid_idx=len(my_list) // 2
+    mid_val=my_list[mid_idx]
 
-    tree_node = {"data": mid_val}
-    tree_node["left_child"] = build_bst(my_list[: mid_idx])
-    tree_node["right_child"] = build_bst(my_list[mid_idx + 1:])
+    tree_node={"data": mid_val}
+    tree_node["left_child"]=build_bst(my_list[: mid_idx])
+    tree_node["right_child"]=build_bst(my_list[mid_idx + 1:])
 
     return tree_node
 
 
 # HELPER VARIABLES
-tree_level_1 = build_bst([1])
-tree_level_2 = build_bst([1, 2, 3])
-tree_level_4 = build_bst([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
-tree_level_bunch = build_bst(list(range(1, 100, 1)))
+tree_level_1=build_bst([1])
+tree_level_2=build_bst([1, 2, 3])
+tree_level_4=build_bst([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+tree_level_bunch=build_bst((range(1, 100, 1)))
 # test cases
 print(depth(tree_level_bunch))
 print(depth(tree_level_2))
@@ -945,16 +946,16 @@ print(depth(tree_level_4))
 def merge_sort(items):
     if len(items) <= 1:
         return items
-    middle_index = len(items) // 2
-    left_split = items[:middle_index]
-    right_split = items[middle_index:]
-    left_sorted = merge_sort(left_split)
-    right_sorted = merge_sort(right_split)
+    middle_index=len(items) // 2
+    left_split=items[:middle_index]
+    right_split=items[middle_index:]
+    left_sorted=merge_sort(left_split)
+    right_sorted=merge_sort(right_split)
     return merge(left_sorted, right_sorted)
 
 
 def merge(left, right):
-    result = []
+    result=[]
     while left and right:
         if left[0] < right[0]:
             result.append(left[0])
@@ -969,8 +970,8 @@ def merge(left, right):
     return result
 
 
-unordered_list1 = [356, 746, 264, 569, 949, 895, 125, 455]
-unordered_list2 = [787, 677, 391, 318, 543, 717, 180, 113, 795, 19, 202, 534,
+unordered_list1=[356, 746, 264, 569, 949, 895, 125, 455]
+unordered_list2=[787, 677, 391, 318, 543, 717, 180, 113, 795, 19, 202, 534,
                    201, 370, 276, 975, 403, 624, 770, 595, 571, 268, 373]
 unordered_list3 = [860, 380, 151, 585, 743, 542, 147, 820, 439, 865, 924, 387]
 
@@ -981,3 +982,75 @@ ordered_list3 = merge_sort(unordered_list3)
 print(ordered_list1)
 print(ordered_list2)
 print(ordered_list3)
+
+
+def quicksort(list, start, end):
+    # this portion of list has been sorted
+    if start >= end:
+        return
+    print("Running quicksort on {0}".format(list[start: end + 1]))
+    # select random element to be pivot
+    pivot_idx = randrange(start, end + 1)
+    pivot_element = list[pivot_idx]
+    print("Selected pivot {0}".format(pivot_element))
+    # swap random element with last element in sub-lists
+    list[end], list[pivot_idx] = list[pivot_idx], list[end]
+
+    # tracks all elements which should be to left (lesser than) pivot
+    less_than_pointer = start
+
+    for i in range(start, end):
+        # we found an element out of place
+        if list[i] < pivot_element:
+            # swap element to the right-most portion of lesser elements
+            print("Swapping {0} with {1}".format(list[i], pivot_element))
+            list[i], list[less_than_pointer] = list[less_than_pointer], list[i]
+            # tally that we have one more lesser element
+            less_than_pointer += 1
+    # move pivot element to the right-most portion of lesser elements
+    list[end], list[less_than_pointer] = list[less_than_pointer], list[end]
+    print("{0} successfully partitioned".format(list[start: end + 1]))
+    # recursively sort left and right sub-lists
+    quicksort(list, start, less_than_pointer - 1)
+    quicksort(list, less_than_pointer + 1, end)
+
+
+list = [5, 3, 1, 7, 4, 6, 2, 8]
+shuffle(list)
+print("PRE SORT: ", list)
+print(quicksort(list, 0, len(list) - 1))
+print("POST SORT: ", list)
+
+
+def radix_sort(to_be_sorted):
+    maximum_value = max(to_be_sorted)
+    max_exponent = len(str(maximum_value))
+    being_sorted = to_be_sorted[:]
+
+    for exponent in range(max_exponent):
+        position = exponent + 1
+        index = -position
+
+        digits = [[] for i in range(10)]
+
+        for number in being_sorted:
+            number_as_a_string = str(number)
+            try:
+                digit = number_as_a_string[index]
+            except IndexError:
+                digit = 0
+            digit = int(digit)
+
+            digits[digit].append(number)
+
+        being_sorted = []
+        for numeral in digits:
+            being_sorted.extend(numeral)
+
+    return being_sorted
+
+
+unsorted_list = [830, 921, 163, 373, 9961, 634559, 89, 199,
+                 535, 959, 40, 641, 355, 3689, 2621, 12183, 182, 524, 1]
+
+print(radix_sort(unsorted_list))
