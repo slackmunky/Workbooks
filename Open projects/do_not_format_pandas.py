@@ -12,14 +12,17 @@ pd.set_option('display.max_columns', 20)
 # "r" character in front of the filepath to make a raw string so the escape
 # characters don't work. No escape!
 
-home_bookshelf = r"..\Closed projects\bookshelf.csv"
-df_book = pd.read_csv(home_bookshelf)
+bookshelf = r"Closed Projects\bookshelf.csv"
+df_book = pd.read_csv(bookshelf)
 
-home_employees = r"..\Closed projects\employees.csv"
-df_emp = pd.read_csv(home_employees)
+employees = r"Closed Projects\employees.csv"
+df_emp = pd.read_csv(employees)
 
-home_inventory = r"..\Closed projects\inventory.csv"
-df_inv = pd.read_csv(home_inventory)
+inventory = r"Closed Projects\inventory.csv"
+df_inv = pd.read_csv(inventory)
+
+orders = r"Closed Projects\orders.csv"
+df_orders = pd.read_csv(orders)
 
 print(df_book)
 print("\n\n")
@@ -117,6 +120,8 @@ mylambda = lambda string: string[0] + string[-1] if len(string) > 2 else string
 # Creates a "last_name" column by applying the lambda to "name"
 # df["last_name"] = df.name.apply(get_last_name)
 
+df_orders["shoe_source"] = df_orders.shoe_material.apply(lambda material: "animal" if material == "leather" else "vegan")
+print(df_orders)
 # Renaming column headers one at a time uses dict syntax.
 df_emp.rename(columns={"id": "Employee ID", "name": "Full Name"}, inplace=True)
 # If you don't use "inplace=True" new columns will be created. Change them
@@ -145,3 +150,31 @@ df_emp["total_earned"] = df_emp.apply(lambda row:
                                       )
 
 
+# Pulling data from a DataFrame
+print(df_orders.head(10))
+# Syntax is "DataFrame_name.column_name.function()". Should be able to just look up some functions. A couple are below.
+most_expensive = df_orders.price.max()
+num_colors = df_orders.shoe_color.nunique()
+print(most_expensive, num_colors)
+# Like items can be grouped together using ".groupby"
+# Syntax is "df_name.groupby("column_to_group").target_column.function()"
+pricey_shoes = df_orders.groupby("shoe_type").price.max()
+print(pricey_shoes)
+# Usually, you want a new DataFrame, so use ".reset_index()" for that.
+pricey_shoes_2 = df_orders.groupby("shoe_type").price.max().reset_index()
+print(pricey_shoes_2)
+# The function appied to a column can be a lambda function using ".apply"
+# In this case, the "np.percentile(x, y)" function was used.
+# x = the input array
+# y = percentile to find
+cheap_shoes = df_orders.groupby("shoe_color").price.apply(lambda x: np.percentile(x, 25)).reset_index()
+print(cheap_shoes)
+# You can also check against variables in multiple columns.
+# "shoe_type" and "shoe_color" are columns indexed, and "id" is the column the function is performed upon.
+shoe_counts = df_orders.groupby(["shoe_type", "shoe_color"]).id.count().reset_index()
+print(shoe_counts)
+# You can also create pivot tables using the syntax below.
+shoe_counts_pivot = shoe_counts.pivot(
+    columns="shoe_color",
+    index="shoe_type",
+    values="id").reset_index()

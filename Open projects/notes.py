@@ -670,7 +670,7 @@ class MinHeap:
                 self.heap_list[smaller_child_idx] = parent
             idx = smaller_child_idx
 
-    print("Heap Restored! {0}".format(self.heap_list))
+        print("Heap Restored! {0}".format(self.heap_list))
 
     def get_smaller_child_idx(self, idx):
         if self.right_child_idx(idx) > self.count:
