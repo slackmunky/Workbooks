@@ -1,32 +1,33 @@
-def radix_sort(to_be_sorted):
-    maximum_value = max(to_be_sorted)
-    max_exponent = len(str(maximum_value))
-    being_sorted = to_be_sorted[:]
+import pandas as pd
+import numpy as np
 
-    for exponent in range(max_exponent):
-        position = exponent + 1
-        index = -position
+# Prints whole big DataFrame. SUPER DUPER AMAZING USEFUL!!!!!!!!!!!!!!!
+desired_width = 320
+pd.set_option('display.width', desired_width)
+np.set_printoptions(linewidth=desired_width)
+pd.set_option('display.max_columns', None)
 
-        digits = [[] for i in range(10)]
+visits = pd.read_csv(r'..\Data Files\visits.csv', parse_dates=[1])
+cart = pd.read_csv(r'..\Data Files\cart.csv', parse_dates=[1])
+checkout = pd.read_csv(r'..\Data Files\checkout.csv', parse_dates=[1])
+purchase = pd.read_csv(r'..\Data Files\purchase.csv', parse_dates=[1])
 
-        for number in being_sorted:
-            number_as_a_string = str(number)
-            try:
-                digit = number_as_a_string[index]
-            except IndexError:
-                digit = 0
-            digit = int(digit)
+visit_to_cart = pd.merge(visits, cart, how="left")
+visit_to_checkout = visit_to_cart.merge(checkout, how="left")
+all_data = visit_to_checkout.merge(purchase, how="left")
 
-            digits[digit].append(number)
+print("Total visits: ", len(visits))
+empty_cart = float(len(
+        visit_to_cart[visit_to_cart.cart_time.isnull()])) \
+             / float(len(visit_to_cart))
+print("Visit only: ", empty_cart)
 
-        being_sorted = []
-        for numeral in digits:
-            being_sorted.extend(numeral)
+no_checkout = float(len(
+        visit_to_checkout[visit_to_checkout.checkout_time.isnull()])) \
+              / float(len(visit_to_checkout))
+print("To cart: ", no_checkout)
 
-    return being_sorted
-
-
-unsorted_list = [830, 921, 163, 373, 9961, 634559, 89, 199,
-                 535, 959, 40, 641, 355, 3689, 2621, 12183, 182, 524, 1]
-
-print(radix_sort(unsorted_list))
+no_purchase = float(len(
+        all_data[all_data.purchase_time.isnull()])) \
+              / float(len(all_data))
+print("No purchase: ", no_purchase)

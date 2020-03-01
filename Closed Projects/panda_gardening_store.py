@@ -7,8 +7,7 @@ pd.set_option('display.width', desired_width)
 np.set_printoptions(linewidth=desired_width)
 pd.set_option('display.max_columns', 20)
 
-home_inventory = r"C:\Users\cpm87\PycharmProjects\Workbooks\Open " \
-                 r"projects\inventory.csv"
+home_inventory = r"..\Data Files\inventory.csv"
 inventory = pd.read_csv(home_inventory)
 
 # print(inventory.head(10))
