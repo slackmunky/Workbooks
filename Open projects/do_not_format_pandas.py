@@ -30,7 +30,7 @@ df0 = pd.DataFrame({
     "Product Name": ["t-shirt", "t-shirt", "skirt", "skirt"],
     "Color": ["blue", "green", "red", "black"]
 })
-
+print(df0)
 # Row entry DataFrame layout. Rows of data as lists, with column headers
 # named at the end of the file.
 df = pd.DataFrame([

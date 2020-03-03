@@ -5,113 +5,82 @@ from bs4 import BeautifulSoup
 import openpyxl
 
 desired_width = 320
+# pd.set_option('display.max_colwidth', 25)
 pd.set_option('display.width', desired_width)
 np.set_printoptions(linewidth=desired_width)
 pd.set_option('display.max_columns', None)
-
+# mh_soup = BeautifulSoup(open(r"..\Data Files\mohawk_test.html"),
+#                         features="html.parser") Open
+#                         projects\html_scratch.htm
 mh_soup = BeautifulSoup(open(r"..\Data Files\mohawk_test.html"),
-                        features="html.parser")
+                        features="html.parser")  # -item
 
-show_list_main = mh_soup.select(".list-view-item")
-presenting = mh_soup.select(".presented-by")
-headliners = mh_soup.select(".headliners")
-dates = mh_soup.select(".dates")  # Done and used as dict keys.
-supporting = mh_soup.select(".supports")
+show_list_main = mh_soup.select(".list-view-item")  # MAIN
+artist_info = mh_soup.select(".artist-info")
+presenting = mh_soup.select(".artist-info")  # DONE DONE DONE
+headliners = mh_soup.select(".headliners")  # DONE DONE DONE
+dates = mh_soup.select(".date-time")  # DONE DONE DONE
+supporting = mh_soup.select(".artist-info")  # DONE DONE DONE
 show_pages = mh_soup.select(".image-url")
-show_time = mh_soup.selet(".start")
-ages = mh_soup.select(".age-restriction")
-prices = mh_soup.select(".price-range")
-
-date_keys = []  # COMPLETED
-for date in dates:
-    mh_key = "mohawk_" + date.string.replace(
-            ", ", "_").replace(" ", "_").lower()
-    date_keys.append(str(mh_key))
-#print(date_keys)
-#print(artists[0])
-headliner_list = []
-for act in headliners:
-    artist = str(act.string)
-    headliner_list += artist
-#print("acts:", len(headliner_list))
-print(headliner_list[:5])
-
-links = []
-for link in show_pages:
-    lnk = str(link.string)
-    links.append(lnk)
-#print(links)
-
-# event_text = {}
-# counter = 0
-# for item in show_list_main:
-#     key = date_keys[counter]
-#     event_text[key] = []
-#     details = list(item.stripped_strings)
-#     event_text[key] = details
-#     counter += 1
+show_time = mh_soup.select(".start")  # DONE DONE DONE
+ages = mh_soup.select(".date-age")  # DONE DONE DONE
+prices = mh_soup.select(".list-view-item")
 
 
+def mh_get_info(data_group, columns, tag_name):
+    if type(tag_name) is not str:
+        return print("tag_name must be a string.")
+    for item in columns:
+        if type(item) is not str:
+            return print("columns must be a list of strings.")
+    counter = 1
+    fun_dict = {"mohawk_0": columns}
+    fun_dict["mohawk_0"].insert(0, "list_id")
+    for item in data_group:
+        key = "mohawk_" + str(counter)
+        fun_dict[key] = []
+        data_group = list(item.find_all(tag_name))
+        show = [counter]
+        for entry in data_group:
+            entry_text = entry.get_text()
+            show.append(entry_text)
+        while len(show) < len(fun_dict["mohawk_0"]):
+            show.append("NVal")
+        fun_dict[key] += show
+        counter += 1
+    # print(fun_dict)
+    return fun_dict
 
 
+def create_df(info_dict):
+    info_df = pd.DataFrame(info_dict)
+    info_df_transposed = info_df.transpose()
+    # info_df_transposed.to_excel(r"..\Data Files\mohawk_test_out.xlsx")
+    print(info_df_transposed)
+    return info_df_transposed
 
 
-# tickets = mh_soup.select(".price-range")
-# price_list = []
-# for item in tickets:
-#     prices = item.stripped_strings
-#     price_list.extend(prices)
+# price_list = mh_get_info(prices, ["ticket_price", "col_2"], "span")
+# price_sheet = create_df(price_list)
 
-# print(price_list)
-# big_money = {}
-# table_rows = mh_soup.select("tr")
+# date_age = mh_get_info(ages, ["time", "age_restriction"], "section")
+# date_age_sheet = create_df(for_ages)
 
-# counter = 1
-# row_list = []
+# supporting_acts = mh_get_info(supporting, ["supported_by"], "h2")
+# support_sheet = create_df(supporting_acts)
 
-# for row in table_rows:
-#     row_text = row.get_text("||")
-#     row_list = row_text.split("||")
-#     while len(row_list) < 15:
-#         row_list.append("fill")
-#     big_money[counter] = row_list
-#     counter += 1
+# presented_by = mh_get_info(presenting, ["presented_by"], "section")
+# presenter_sheet = create_df(presented_by)
+
+# date_time = mh_get_info(dates, ["date", "time"], "span")
+# schedule_sheet = create_df(date_time)
+# hl_dict = mh_get_info(artist_info,
+#                       ["headliner_1", "headliner_2"],
+#                       "h1")
+# headliner_df = create_df(hl_dict)
 
 
-# for key in big_money:
-#     while len(big_money[key]):
-
-# df_bm = pd.DataFrame(big_money)
-# df_bm_transposed = df_bm.transpose()
-# print(df_bm)
-
-#df_bm_transposed.to_excel(r"..\Data Files\show_spot_test.xlsx")
-#     stats = turtle.find("ul")
-#     stats_text = stats.get_text("|")
-#     turtle_data[turtle_name] = stats_text.split("|")
-#for key in big_money:
-#    print(big_money[key])
-
-
-
-
-# for column in column3:
-#     try:
-#         count = 1
-#         print(type(item))
-#         date_text = item.get_text()
-#         details = [date_text]
-#         #deets = item.find("td")
-#         #print(type(deets))
-#         #deets_text = deets.get_text("||")
-#         #details.extend(deets)
-#         big_money[count] = [details]
-#     except TypeError:
-#         print("Big ol' None in there.")
-
-# print(big_money)
-
-#     stats = turtle.find("ul")
-#     stats_text = stats.get_text("|")
-#     turtle_data[turtle_name] = stats_text.split("|")
-
+def null_val(item_to_test):
+    if type(item_to_test) == None:
+        return "NVal"
+    return item_to_test
