@@ -3,17 +3,20 @@ import numpy as np
 import requests
 from bs4 import BeautifulSoup
 import openpyxl
+import re
 
 desired_width = 320
 # pd.set_option('display.max_colwidth', 25)
 pd.set_option('display.width', desired_width)
 np.set_printoptions(linewidth=desired_width)
 pd.set_option('display.max_columns', None)
-# mh_soup = BeautifulSoup(open(r"..\Data Files\mohawk_test.html"),
-#                         features="html.parser") Open
-#                         projects\html_scratch.htm
-mh_soup = BeautifulSoup(open(r"..\Data Files\mohawk_test.html"),
-                        features="html.parser")  # -item
+
+try:
+    mh_soup = BeautifulSoup(
+        open(r"..\Data Files\mohawk_test.html"), features="html.parser")
+except FileNotFoundError:
+    mh_soup = BeautifulSoup(open(r"Data Files\mohawk_test.html"),
+                            features="html.parser")
 
 show_list_main = mh_soup.select(".list-view-item")  # MAIN
 artist_info = mh_soup.select(".artist-info")
@@ -21,13 +24,39 @@ presenting = mh_soup.select(".artist-info")  # DONE DONE DONE
 headliners = mh_soup.select(".headliners")  # DONE DONE DONE
 dates = mh_soup.select(".date-time")  # DONE DONE DONE
 supporting = mh_soup.select(".artist-info")  # DONE DONE DONE
-show_pages = mh_soup.select(".image-url")
+show_pages = mh_soup.findAll("a",
+                             href=re.compile("mohawkaustin"),
+                             class_="image-url")
 show_time = mh_soup.select(".start")  # DONE DONE DONE
 ages = mh_soup.select(".date-age")  # DONE DONE DONE
-prices = mh_soup.select(".ticket-price")  # May need to hold off on this one. Maybe do links first...
+# May need to hold off on this one. Maybe do links first...
+prices = mh_soup.select(".ticket-price")
 
-for item in prices:
-    print(item)
+
+def get_links(source):
+    links = []
+    for link in source:
+        links.append(link.get('href'))
+    counter = 1
+    fun_dict = {"mohawk_0": ["list_id", "show_link"]}
+    # fun_dict["mohawk_0"].insert(0, "list_id")
+    key = "mohawk_" + str(counter)
+    for entry in links:
+        fun_dict[key] = []
+        show = [counter]
+        show.append(entry)
+    while len(show) < len(fun_dict["mohawk_0"]):
+        show.append("NVal")
+    fun_dict[key] += show
+    counter += 1
+    print(fun_dict)
+    return fun_dict
+get_links(show_pages)
+
+def null_val(item_to_test):
+    if type(item_to_test) == None:
+        return "NVal"
+    return item_to_test
 
 
 def mh_get_info(data_group, columns, tag_name):
@@ -81,9 +110,3 @@ def create_df(info_dict):
 #                       ["headliner_1", "headliner_2"],
 #                       "h1")
 # headliner_df = create_df(hl_dict)
-
-
-def null_val(item_to_test):
-    if type(item_to_test) == None:
-        return "NVal"
-    return item_to_test

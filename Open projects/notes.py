@@ -14,7 +14,12 @@
 # Nodes 245-ish through 324-ish
 
 # Basic class and method
-
+show_pages = mh_soup.select(".image-url")
+links = []
+for link in show_pages:
+    lnk = str(link.string)
+    links.append(lnk)
+#print(links)
 
 from random import randrange, shuffle
 from random import randrange
