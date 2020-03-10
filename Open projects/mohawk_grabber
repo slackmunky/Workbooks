@@ -27,6 +27,29 @@ ages = mh_soup.select(".date-age")  # DONE DONE DONE
 prices = mh_soup.select(".list-view-item")
 
 
+def get_links(source):
+    links = []
+    for link in source:
+        links.append(link.get('href'))
+    counter = 1
+    fun_dict = {"mohawk_0": ["list_id", "show_link"]}
+    fun_dict["mohawk_0"].insert(0, "list_id")
+    key = "mohawk_" + str(counter)
+    for entry in links:
+        print(entry)
+        fun_dict[key] = [counter, entry]
+        show = [counter, entry]
+        while len(show) < len(fun_dict["mohawk_0"]):
+            show.append("NVal")
+            fun_dict[key] += show
+            counter += 1
+    # print(links)
+    print(len(fun_dict))
+    return fun_dict
+
+
+get_links(show_pages)
+
 def mh_get_info(data_group, columns, tag_name):
     if type(tag_name) is not str:
         return print("tag_name must be a string.")
@@ -36,11 +59,17 @@ def mh_get_info(data_group, columns, tag_name):
     counter = 1
     fun_dict = {"mohawk_0": columns}
     fun_dict["mohawk_0"].insert(0, "list_id")
+    fun_dict["mohawk_0"].insert(1, "show_link")
     for item in data_group:
         key = "mohawk_" + str(counter)
         fun_dict[key] = []
         data_group = list(item.find_all(tag_name))
         show = [counter]
+        try:
+            show_link = item.find("a", href=re.compile("https")).get("href")
+            show.append(show_link)
+        except AttributeError:
+            pass
         for entry in data_group:
             entry_text = entry.get_text()
             show.append(entry_text)
